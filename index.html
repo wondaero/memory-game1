@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메모리 게임1</title>
+    <link rel="stylesheet" href="https://wondaero.github.io/assets/css/normalize.css">
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
+            font-weight: 600;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff') format('woff');
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        body{font-family: 'Pretendard';}
+        header{
+            background: purple;
+            padding: 10px;
+            color: #fff;
+        }
+        header h1{
+            margin: 0;
+        }
+
+        p.guide{text-align: center; font-size: 24px;}
+        p.guide strong{display: block;}
+        p.guide strong span{color: #f00;}
+
+        .btns{
+            padding: 10px 10px 0;
+            border-top: 1px dashed #ddd;
+        }
+
+        .btn-group1 > div{
+            margin-bottom: 15px;
+        }
+        .btn-group1 > div:last-of-type{
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        h3{margin: 0 0 5px; text-align: center;}
+
+        .txt-range > div{
+            display: flex;
+            justify-content: center;
+        }
+        .txt-range label{margin-right: 8px; display: flex;}
+        .txt-range > div > label:last-of-type{margin-right: 0;}
+        .txt-range label input{display: none;}
+        .txt-range label input + strong{
+            padding: 5px 10px;
+            border: 1px solid #eee;
+            background: #eee;
+            color: #ccc;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 400;
+        }
+        .txt-range label input:checked + strong{
+            display: flex;
+            align-items: center;
+            color: #000;
+            background: #fff;
+            font-weight: 800;
+            box-shadow: 0 3px 3px rgba(0, 0, 0, .5);
+        }
+
+        .sel-group{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .txt-length select,
+        .time-range select{
+            border: 1px solid #eee;
+            border-radius: 5px;
+            width: 80px;
+            height: 40px;
+            text-align: center;
+        }
+        .txt-length input,
+        .time-range input{
+            height: 40px;
+            width: 120px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            text-align: right;
+            margin-left: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-start{
+            padding: 20px;
+            border-radius: 5px;
+            background: orchid;
+            border: 1px solid #eee;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn-group2{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .btn-group2 input{
+            width: 200px;
+            height: 40px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .btn-group2 .btn-submit{
+            padding: 20px 40px;
+            border-radius: 5px;
+            background: orchid;
+            border: 1px solid #eee;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .btn-group3{
+            text-align: center;
+        }
+        .btn-group3 .btn-reset{
+            padding: 20px 40px;
+            border-radius: 5px;
+            background: orchid;
+            border: 1px solid #eee;
+            color: #fff;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        .none{display: none;}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>메모리 게임1</h1>
+    </header>
+    <p id="guide" class="guide">
+        아래 옵션을 선택 후,<br>
+        게임시작 버튼을 눌러주세요.
+    </p>
+    <div class="btns">
+        <div id="btnGroup1" class="btn-group1" data-class="btnGroups">
+            <div class="txt-range">
+                <h3>문자 범위</h3>
+                <div>
+                    <label>
+                        <input type="checkbox" name="txtRange" value="a" checked />
+                        <strong>소문자</strong>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="txtRange" value="A" />
+                        <strong>대문자</strong>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="txtRange" value="1" />
+                        <strong>숫자</strong>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="txtRange" value="s" />
+                        <strong>띄어쓰기</strong>
+                    </label>
+                </div>
+            </div>
+            <div class="txt-length">
+                <h3>문자 갯수</h3>
+                <div class="sel-group">
+                    <select id="txtLen">
+                        <option value="1">1개</option>
+                        <option value="2">2개</option>
+                        <option value="3">3개</option>
+                        <option value="5" selected>5개</option>
+                        <option value="8">8개</option>
+                        <option value="10">10개</option>
+                        <option value="15">15개</option>
+                        <option value="20">20개</option>
+                        <!-- <option value="25">25개</option>
+                        <option value="30">30개</option> -->
+                        <option value="100">커스텀</option>
+                    </select>
+                    <div id="customTxtLen" class="none">
+                        <input type="number" id="cstmTxtLen" placeholder="1 ~ 20(자연수)" />
+                        <span>개</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="time-range">
+                <h3>노출 시간</h3>
+                <div class="sel-group">
+                    <select id="timeRange">
+                        <option value="0">깜빡</option>
+                        <option value="0.1">0.1초</option>
+                        <option value="0.3">0.3초</option>
+                        <option value="0.5">0.5초</option>
+                        <option value="0.8">0.8초</option>
+                        <option value="1" selected>1초</option>
+                        <option value="1.5">1.5초</option>
+                        <option value="2">2초</option>
+                        <option value="3">3초</option>
+                        <option value="5">5초</option>
+                        <option value="10">10초</option>
+                        <option value="100">커스텀</option>
+                    </select>
+                    <div id="customTime" class="none">
+                        <input type="number" id="cstmTime" placeholder="0.1 ~ 15" />
+                        <span>초</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button id="btn_start" class="btn-start">게임시작</button>
+            </div>
+        </div>
+        <div id="btnGroup2" class="btn-group2 none" data-class="btnGroups">
+            <input id="myMemoryInput" type="text" />
+            <button id="btn_submit" class="btn-submit">제출</button>
+        </div>
+        <div id="btnGroup3" class="btn-group3 none" data-class="btnGroups">
+            <button id="btn_reset" class="btn-reset">초기화면</button>
+        </div>
+    </div>
+
+    <script>
+        const txtGroup = {
+            a: 'abcdefghijklmnopqrstuvwxyz',
+            A: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            1: '123456789',
+            s: ' '
+        }
+
+        let startValue;
+        let rdmTxt = '';
+        
+        let raf;
+        let time;
+
+        const getRandomNum = (mn, mx) => Math.floor(Math.random() * (mx - mn + 1)) + mn;
+
+        timeRange.addEventListener('change', (e) => {
+            customTime.classList[e.target.value === '100' ? 'remove' : 'add']('none');
+        })
+        txtLen.addEventListener('change', (e) => {
+            customTxtLen.classList[e.target.value === '100' ? 'remove' : 'add']('none');
+        })
+
+        btn_start.addEventListener('click', () => {
+            const chkedTxtRange = document.querySelectorAll('[name="txtRange"]:checked');
+            if(!chkedTxtRange.length){
+                alert('문자범위를 1개 이상 지정해주세요.');
+                return;
+            }
+
+            let textLen = +txtLen.value;
+            if(textLen === 100) textLen = +cstmTxtLen.value;
+
+            if(1 <= textLen && textLen <= 20 && (textLen % 1) === 0){
+
+            }else{
+                alert('문자 갯수를 확인해주세요.');
+                return;
+            }
+
+            time = +timeRange.value;
+            if(time === 100) time = +cstmTime.value;
+
+            if((0 < time && time <= 15) || time === 0){
+
+            }else{
+                alert('노출시간을 확인해주세요.');
+                return;
+            }
+
+            let combinedTxt = '';
+            chkedTxtRange.forEach((el) => {
+                combinedTxt += txtGroup[el.value];
+            });
+
+
+            rdmTxt = '';
+            for(let i = 0; i < textLen; i++){
+                rdmTxt += combinedTxt[getRandomNum(0, combinedTxt.length - 1)];
+            }
+
+            
+            countDown();
+
+            document.querySelectorAll('[data-class="btnGroups"]').forEach((el) => {
+                el.classList.add('none');
+            })
+
+            function countDown(val){
+                const sec = 3;  //3초
+                if(startValue === undefined){
+                    startValue = val;
+
+                    return window.requestAnimationFrame(countDown);
+                }
+                if(startValue + (sec * 1000) >= val){    
+                    raf = window.requestAnimationFrame(countDown);
+                    const guideTxt = parseInt((val - startValue) / 1000)
+                    guide.innerHTML = sec - guideTxt;
+                    guide.style.transform = `scale(${((val - startValue) / 1000) - guideTxt})`;
+                }else{
+                    window.cancelAnimationFrame(raf);
+                    guide.removeAttribute('style');
+                    startValue = undefined;
+
+                    showText();
+                }
+            }
+
+
+        })
+
+        function showText(val){
+            if(startValue === undefined){
+                startValue = val;
+                return window.requestAnimationFrame(showText);
+            }
+
+            guide.innerHTML = rdmTxt;
+            
+            if(startValue + (time * 1000) >= val){    
+                raf = window.requestAnimationFrame(showText);
+            }else{
+                window.cancelAnimationFrame(raf);
+                guide.innerHTML = '아래에 적어주세요.';
+                startValue = undefined;
+
+                btnGroup2.classList.remove('none');
+            }
+        }
+
+        btn_submit.addEventListener('click', () => {
+            document.querySelectorAll('[data-class="btnGroups"]').forEach((el) => {
+                el.classList.add('none');
+            });
+
+            guide.innerHTML = `
+                <strong id="itsMemory">${rdmTxt}</strong>
+                <strong id="myMemory"></strong>
+            `;
+
+            for(let i = 0; i < myMemoryInput.value.length; i++){
+                const txtTarget = myMemoryInput.value[i];
+                if(rdmTxt[i] && rdmTxt[i] === txtTarget){
+                    myMemory.innerHTML += txtTarget;
+                }else{
+                    myMemory.innerHTML += `<span>${txtTarget}</span>`;
+                }
+            }
+
+            if(itsMemory.textContent === myMemory.textContent){
+                alert('올!');
+            }
+
+            btnGroup3.classList.remove('none');
+        })
+
+        btn_reset.addEventListener('click', () => {
+            window.location.reload();
+        })
+
+
+
+
+    </script>
+</body>
+</html>

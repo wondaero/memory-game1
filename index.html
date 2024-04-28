@@ -282,6 +282,9 @@
             if(!chkedTxtRange.length){
                 alert('문자범위를 1개 이상 지정해주세요.');
                 return;
+            }else if(chkedTxtRange.length === 1 && chkedTxtRange[0].value === 's'){
+                alert('띄어쓰기만은 제공하지 않습니다.');
+                return;
             }
 
             let textLen = +txtLen.value;
@@ -308,6 +311,11 @@
             chkedTxtRange.forEach((el) => {
                 combinedTxt += txtGroup[el.value];
             });
+
+            if(chkedTxtRange.length === 1 && chkedTxtRange[0].value === '1'){
+                combinedTxt = txtGroup[1] + 0;
+                console.log(combinedTxt);
+            }
 
 
             rdmTxt = '';
